@@ -100,6 +100,10 @@ echo "Using DISPLAY: $my_display"
 echo "vnc_opts: $vnc_opts"
 
 ##--------------------------------------------------------------------------##
+## Check in case VNC server already running:
+vncserver -list
+
+##--------------------------------------------------------------------------##
 ## Clean up:
 #[ -d $tmp_dir ] && [ -O $tmp_dir ] && rm -rf $tmp_dir
 #[ -f $foo ] && rm -f $foo
