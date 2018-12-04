@@ -92,7 +92,7 @@ disp_conf="src/user_displays.conf"
 [ -f $disp_conf ] || PauseAbort "Can't find file: $disp_conf"
 
 ## Get list of known users:
-my_display=$(awk -v userid=$(whoami) '$1 == userid {print $2}' $disp_conf)
+my_display=$(awk -v userid=$(whoami) '$1 == userid {printf ":%d\n", $2}' $disp_conf)
 if [ -z "$my_display" ]; then
    PauseAbort "Unrecognized user: `whoami`"
 fi
@@ -101,14 +101,22 @@ echo "vnc_opts: $vnc_opts"
 
 ##--------------------------------------------------------------------------##
 ## Check in case VNC server already running:
-hits=( `vncserver -list | awk -v disp=":${my_display}" '$1 == disp'` )
-nhit=${#hits[*]}
-echo "nhit: $nhit"
+vncserver -list > $foo
+nrunning=`awk -v disp="${my_display}" '$1 == disp' $foo | wc -l`
+if [ $nrunning -gt 0 ]; then
+   yecho "VNC server already appears to be running on ${my_display} ... try connecting??\n\n"
+
+   echo "To stop the running server, try:"
+   echo "vncserver -kill $my_display"
+else
+   # attempt to start server
+   cmde "vncserver $my_display"
+fi
 
 ##--------------------------------------------------------------------------##
 ## Clean up:
 #[ -d $tmp_dir ] && [ -O $tmp_dir ] && rm -rf $tmp_dir
-#[ -f $foo ] && rm -f $foo
+[ -f $foo ] && rm -f $foo
 #[ -f $bar ] && rm -f $bar
 #[ -f $baz ] && rm -f $baz
 #[ -f $qux ] && rm -f $qux
