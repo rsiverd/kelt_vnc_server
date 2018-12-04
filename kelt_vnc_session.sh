@@ -101,7 +101,9 @@ echo "vnc_opts: $vnc_opts"
 
 ##--------------------------------------------------------------------------##
 ## Check in case VNC server already running:
-vncserver -list
+hits=( `vncserver -list | awk -v disp=":${my_display}" '$1 == disp'` )
+nhit=${#hits[*]}
+echo "nhit: $nhit"
 
 ##--------------------------------------------------------------------------##
 ## Clean up:
