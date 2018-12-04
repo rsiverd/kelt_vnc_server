@@ -81,7 +81,8 @@ fi
 this_host=$(hostname -s)
 case $this_host in
    rsiverd-linux|krang|shredder|splinter)
-      vnc_opts="-depth 24 -geometry 1680x1050 -autokill -localhost"
+      #vnc_opts="-depth 24 -geometry 1680x1050 -autokill -localhost"
+      vnc_opts="-depth 24 -autokill"
       ;;
    *) PauseAbort "Unrecognized host: $this_host"
       ;;
@@ -110,7 +111,7 @@ if [ $nrunning -gt 0 ]; then
    echo "vncserver -kill $my_display"
 else
    # attempt to start server
-   cmde "vncserver $my_display"
+   cmde "vncserver $my_display $vnc_opts"
 fi
 
 ##--------------------------------------------------------------------------##
