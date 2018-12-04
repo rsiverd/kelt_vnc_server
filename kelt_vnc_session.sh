@@ -67,10 +67,8 @@ eval "$(FuncDef $fd_args)"  || exit $?
 ## Check for arguments:
 usage () { 
    Recho "\nSyntax: $this_prog --START\n\n"
-   #Recho "\nSyntax: $this_prog arg1\n\n"
 }
 if [ "$1" != "--START" ]; then
-#if [ -z "$1" ]; then
    usage >&2
    exit 1
 fi
