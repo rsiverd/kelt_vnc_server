@@ -81,7 +81,7 @@ fi
 
 ## VNC options for known, valid hosts:
 case `hostname` in
-   rsiverd-linux.lco.gtn|krang.vampire)
+   rsiverd-linux.lco.gtn|krang.vampire|shredder|splinter)
       vnc_opts="-depth 24 -geometry 1680x1050 -autokill -localhost"
       ;;
    *) PauseAbort "Unrecognized host: `hostname`"
@@ -93,7 +93,6 @@ disp_conf="src/user_displays.conf"
 [ -f $disp_conf ] || PauseAbort "Can't find file: $disp_conf"
 
 ## Get list of known users:
-#myname=$(whoami)
 my_display=$(awk -v userid=$(whoami) '$1 == userid {print $2}' $disp_conf)
 if [ -z "$my_display" ]; then
    PauseAbort "Unrecognized user: `whoami`"
