@@ -78,11 +78,12 @@ fi
 ##--------------------------------------------------------------------------##
 
 ## VNC options for known, valid hosts:
-case `hostname` in
+this_hist=$(hostname -s)
+case $this_host in
    rsiverd-linux.lco.gtn|krang.vampire|shredder|splinter)
       vnc_opts="-depth 24 -geometry 1680x1050 -autokill -localhost"
       ;;
-   *) PauseAbort "Unrecognized host: `hostname`"
+   *) PauseAbort "Unrecognized host: $this_host"
       ;;
 esac
 
